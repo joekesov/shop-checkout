@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1>Items List</h1>
+
+    <div>
+        <ul>
+            <li>
+                <a href="{{ url('app_item_create') }}">Add new Item</a>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <table style="width: 70%">
+            <tr>
+                <td>id</td>
+                <td>sku</td>
+                <td>actions</td>
+            </tr>
+            {% for item in items %}
+                <tr>
+                    <td><a href="{{ url('app_item_show', { id: item.id }) }}">{{ item.id }}</a></td>
+                    <td><a href="{{ url('app_item_show', { id: item.id }) }}">{{ item.sku }}</a></td>
+                    <td><a href="{{ url('app_item_edit', { id: item.id }) }}">Edit</a></td>
+                </tr>
+
+            {% endfor %}
+        </table>
+
+    </div>
+
+
+{% endblock %}
+

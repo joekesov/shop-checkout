@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1>View details for item #{{ item.id }}</h1>
+
+    <table>
+        <tr>
+            <td>id:</td>
+            <td>{{ item.id }}</td>
+        </tr>
+        <tr>
+            <td>SKU:</td>
+            <td>{{ item.sku }}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <h2>Prices</h2>
+                <a href="{{ url('app_price_create', { id: item.id}) }}">Add price</a>
+                <table>
+                    <tr>
+                        <td>id</td>
+                        <td>quantity</td>
+                        <td>price</td>
+                        <td>is_active</td>
+                        <td>actions</td>
+                    </tr>
+
+                    {% for price in item.prices %}
+                        <tr>
+                            <td>{{ price.id }}</td>
+                            <td>{{ price.quantity }}</td>
+                            <td>{{ price.price }}</td>
+                            <td>{{ price.isactive }}</td>
+                            <td><a href="{{ url('app_price_edit', {id: price.id}) }}">Edit</a></td>
+                        </tr>
+
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Edit Price #{{ price.id }} for item #<a href="{{ url('app_item_show', {id: price.item.id}) }}">{{ price.item.id }}</a></h1>
+    {{ form(form) }}
+
+{% endblock %}

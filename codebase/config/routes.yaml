@@ -1,3 +1,33 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+# the "app_lucky_number" route name is not important yet
+app_lucky_number:
+  path: /lucky/number
+  controller: App\Controller\HomeController::index
+
+app_item_list:
+  path: /item/list
+  controller: App\Presentation\Item\Controller\ItemController::showList
+
+app_item_create:
+  path: /item/create
+  controller: App\Presentation\Item\Controller\ItemController::createItem
+
+app_item_show:
+  path: /item/{id}
+  controller: App\Presentation\Item\Controller\ItemController::showItem
+
+app_item_edit:
+  path: /item/edit/{id}
+  controller: App\Presentation\Item\Controller\ItemController::editItem
+
+app_price_create:
+  path: /price/create/{id}
+  controller: App\Presentation\Price\Controller\PriceController::createPrice
+
+app_price_edit:
+  path: /price/edit/{id}
+  controller: App\Presentation\Price\Controller\PriceController::editPrice
+
