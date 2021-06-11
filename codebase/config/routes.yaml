@@ -36,4 +36,7 @@ app_promotion_edit:
   path: /promotion/edit/{id}
   controller: App\Presentation\Promotion\Controller\PromotionController::edit
 
-
+# -------- Cart Details -----
+app_cart:
+  path: /cart
+  controller: App\Presentation\Order\Controller\CartController::index

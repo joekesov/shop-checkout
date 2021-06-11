@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\AbstractEntity;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,8 +12,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
  */
-class Order
+class Order extends AbstractEntity
 {
+    /**
+     * An order that is in progress, not placed yet.
+     *
+     * @var string
+     */
+    const STATUS_CART = 'cart';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,12 +31,12 @@ class Order
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status;
+    private $status = self::STATUS_CART;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
@@ -36,7 +44,7 @@ class Order
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="order_ref", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="orderRef", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $orderItems;
 
@@ -64,12 +72,12 @@ class Order
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -96,10 +104,18 @@ class Order
 
     public function addOrderItem(OrderItem $orderItem): self
     {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems[] = $orderItem;
-            $orderItem->setOrderRef($this);
+        foreach ($this->getOrderItems() as $existingItem) {
+            // The item already exists, update the quantity
+            if ($existingItem->equals($orderItem)) {
+                $existingItem->setQuantity(
+                    $existingItem->getQuantity() + $orderItem->getQuantity()
+                );
+                return $this;
+            }
         }
+
+        $this->orderItems[] = $orderItem;
+        $orderItem->setOrderRef($this);
 
         return $this;
     }
@@ -114,5 +130,34 @@ class Order
         }
 
         return $this;
+    }
+
+    /**
+     * Removes all items from the order.
+     *
+     * @return $this
+     */
+    public function removeOrderItems(): self
+    {
+        foreach ($this->getOrderItems() as $orderItem) {
+            $this->removeOrderItem($orderItem);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Calculates the order total.
+     *
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        $total = 0;
+        foreach ($this->getOrderItems() as $item) {
+            $total += $item->getTotal();
+        }
+
+        return $total;
     }
 }

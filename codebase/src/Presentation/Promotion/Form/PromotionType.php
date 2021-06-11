@@ -25,7 +25,7 @@ class PromotionType extends AbstractType
             ])
             ->add('quantity', TextType::class)
             ->add('price', TextType::class)
-            ->add('is_active', CheckboxType::class)
+            ->add('isActive', CheckboxType::class)
             ->add('save', SubmitType::class)
         ;
     }
