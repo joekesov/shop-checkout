@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Edit Item <a href="{{ url('app_item_show', {'id': item.id}) }}">#{{ item.id }}</a></h1>
+    <h1>Edit Item <a href="{{ url('app_item_show', {'id': entity.id}) }}">#{{ entity.id }}</a></h1>
     {{ form(form) }}
 {% endblock %}

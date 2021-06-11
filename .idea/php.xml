@@ -134,6 +134,8 @@
       <path value="$PROJECT_DIR$/codebase/vendor/psr/container" />
       <path value="$PROJECT_DIR$/codebase/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/codebase/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/codebase/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/codebase/vendor/doctrine/data-fixtures" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2">

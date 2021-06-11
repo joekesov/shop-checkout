@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\PriceRepository;
+use App\Repository\PromotionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AbstractEntity;
 
 /**
- * @ORM\Entity(repositoryClass=PriceRepository::class)
+ * @ORM\Entity(repositoryClass=PromotionRepository::class)
  */
-class Price
+class Promotion extends AbstractEntity
 {
     /**
      * @ORM\Id
@@ -18,7 +19,7 @@ class Price
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="prices")
+     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="promotions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $item;
@@ -29,7 +30,7 @@ class Price
     private $quantity;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $price;
 
@@ -67,12 +68,12 @@ class Price
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?string
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(string $price): self
     {
         $this->price = $price;
 
@@ -90,5 +91,6 @@ class Price
 
         return $this;
     }
+
     
 }

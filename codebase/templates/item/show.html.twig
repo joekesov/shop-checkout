@@ -6,6 +6,10 @@
 
     <table>
         <tr>
+            <td>Actions:</td>
+            <td><a href="{{ url('app_item_edit', {id: item.id}) }}">Edit</a></td>
+        </tr>
+        <tr>
             <td>id:</td>
             <td>{{ item.id }}</td>
         </tr>
@@ -13,11 +17,15 @@
             <td>SKU:</td>
             <td>{{ item.sku }}</td>
         </tr>
+        <tr>
+            <td>Price:</td>
+            <td>{{ item.price }}</td>
+        </tr>
 
         <tr>
             <td colspan="2">
                 <h2>Prices</h2>
-                <a href="{{ url('app_price_create', { id: item.id}) }}">Add price</a>
+                <a href="{{ url('app_promotion_create', { id: item.id}) }}">Add promotion</a>
                 <table>
                     <tr>
                         <td>id</td>
@@ -27,19 +35,20 @@
                         <td>actions</td>
                     </tr>
 
-                    {% for price in item.prices %}
+                    {% for promotion in item.promotions %}
                         <tr>
-                            <td>{{ price.id }}</td>
-                            <td>{{ price.quantity }}</td>
-                            <td>{{ price.price }}</td>
-                            <td>{{ price.isactive }}</td>
-                            <td><a href="{{ url('app_price_edit', {id: price.id}) }}">Edit</a></td>
+                            <td>{{ promotion.id }}</td>
+                            <td>{{ promotion.quantity }}</td>
+                            <td>{{ promotion.price }}</td>
+                            <td>{{ promotion.isactive }}</td>
+                            <td><a href="{{ url('app_promotion_edit', {id: promotion.id}) }}">Edit</a></td>
                         </tr>
 
                     {% endfor %}
                 </table>
             </td>
         </tr>
+
     </table>
 
 

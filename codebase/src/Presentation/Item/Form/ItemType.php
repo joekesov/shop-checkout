@@ -16,6 +16,7 @@ class ItemType extends AbstractType
     {
         $builder
             ->add('sku', TextType::class)
+            ->add('price', TextType::class)
             ->add('save', SubmitType::class)
         ;
     }

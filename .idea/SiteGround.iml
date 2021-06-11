@@ -138,6 +138,8 @@
       <excludeFolder url="file://$MODULE_DIR$/codebase/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/codebase/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/codebase/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/codebase/vendor/doctrine/doctrine-fixtures-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/codebase/vendor/doctrine/data-fixtures" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
