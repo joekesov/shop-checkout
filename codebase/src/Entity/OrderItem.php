@@ -87,7 +87,22 @@ class OrderItem extends AbstractEntity
      */
     public function getTotal(): float
     {
-        return $this->getItem()->getPrice() * $this->getQuantity();
+        $total = 0;
+
+        $itemQuantity = $this->getQuantity();
+        $promotions = $this->getItem()->getPromotions();
+        foreach ($promotions as $promotion) {
+            if ($itemQuantity >= $promotion->getQuantity()) {
+                $total += $promotion->getPrice();
+                $itemQuantity -= $promotion->getQuantity();
+            }
+        }
+
+        if ($itemQuantity > 0) {
+            $total += $this->getItem()->getPrice() * $itemQuantity;
+        }
+
+        return $total;
     }
 
     /**

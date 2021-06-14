@@ -32,6 +32,7 @@ class Item extends AbstractEntity
 
     /**
      * @ORM\OneToMany(targetEntity=Promotion::class, mappedBy="item", orphanRemoval=true)
+     * @ORM\OrderBy({"quantity": "DESC"})
      */
     private $promotions;
 

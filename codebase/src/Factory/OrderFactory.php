@@ -38,10 +38,10 @@ class OrderFactory
      */
     public function createItem(Item $item): OrderItem
     {
-        $item = new OrderItem();
-        $item->setProduct($item);
-        $item->setQuantity(1);
+        $orderItem = new OrderItem();
+        $orderItem->setProduct($item);
+        $orderItem->setQuantity(1);
 
-        return $item;
+        return $orderItem;
     }
 }
