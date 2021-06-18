@@ -7,25 +7,27 @@ app_home:
   path: /
   controller: App\Presentation\Home\Controller\HomeController::index
 
-app_item_list:
-  path: /item/list
-  controller: App\Presentation\Item\Controller\ManageItemController::showList
+app_product_detail:
+  path: /product/detail/{id}
+  controller: App\Presentation\Product\Controller\ProductController::index
 
-app_item_create:
-  path: /item/create
-  controller: App\Presentation\Item\Controller\ManageItemController::createItem
+app_products_list:
+  path: /product/list
+  controller: App\Presentation\Product\Controller\ManageProductController::showList
 
-app_item_show:
-  path: /item/{id}
-  controller: App\Presentation\Item\Controller\ManageItemController::showItem
+app_product_create:
+  path: /product/create
+  controller: App\Presentation\Product\Controller\ManageProductController::create
 
-app_item_edit:
-  path: /item/edit/{id}
-  controller: App\Presentation\Item\Controller\ManageItemController::editItem
+app_product_view:
+  path: /product/{id}
+  controller: App\Presentation\Product\Controller\ManageProductController::view
 
-app_item_detail:
-  path: /item/detail/{id}
-  controller: App\Presentation\Item\Controller\ItemController::index
+app_product_edit:
+  path: /product/edit/{id}
+  controller: App\Presentation\Product\Controller\ManageProductController::edit
+
+
 
 # -------- Promotion -----
 app_promotion_create:

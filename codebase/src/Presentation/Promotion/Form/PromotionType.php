@@ -11,15 +11,15 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Promotion;
-use App\Entity\Item;
+use App\Entity\Product;
 
 class PromotionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('item', EntityType::class, [
-                'class' => Item::class,
+            ->add('product', EntityType::class, [
+                'class' => Product::class,
                 'choice_label' => 'sku',
                 'disabled' => true,
             ])

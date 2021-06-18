@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\ItemFixtures;
+use App\DataFixtures\ProductFixtures;
 use App\Entity\Promotion;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -13,12 +13,12 @@ class PromotionFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach($this->getData() as $promotionData) {
-            $item = $this->getReference($promotionData['itemRef']);
+            $product = $this->getReference($promotionData['itemRef']);
             $promotion = new Promotion();
             $promotion->setIsActive(true)
                 ->setQuantity($promotionData['quantity'])
                 ->setPrice($promotionData['price'])
-                ->setItem($item);
+                ->setProduct($product);
 
             $manager->persist($promotion);
         }
@@ -29,7 +29,7 @@ class PromotionFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            ItemFixtures::class,
+            ProductFixtures::class,
         ];
     }
 
@@ -39,27 +39,27 @@ class PromotionFixtures extends Fixture implements DependentFixtureInterface
             [
                 'quantity' => 4,
                 'price' => 160,
-                'itemRef' => 'item_01'
+                'itemRef' => 'product_01'
             ],
             [
                 'quantity' => 3,
                 'price' => 130,
-                'itemRef' => 'item_01'
+                'itemRef' => 'product_01'
             ],
             [
                 'quantity' => 2,
                 'price' => 98,
-                'itemRef' => 'item_01'
+                'itemRef' => 'product_01'
             ],
             [
                 'quantity' => 2,
                 'price' => 45,
-                'itemRef' => 'item_02'
+                'itemRef' => 'product_02'
             ],
             [
                 'quantity' => 3,
                 'price' => 50,
-                'itemRef' => 'item_03'
+                'itemRef' => 'product_03'
             ],
         ];
     }

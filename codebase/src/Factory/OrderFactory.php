@@ -5,7 +5,7 @@ namespace App\Factory;
 
 use App\Entity\Order;
 use App\Entity\OrderItem;
-use App\Entity\Item;
+use App\Entity\Product;
 
 /**
  * Class OrderFactory
@@ -32,14 +32,14 @@ class OrderFactory
     /**
      * Creates an item for a product.
      *
-     * @param Item $item
+     * @param Product $product
      *
      * @return OrderItem
      */
-    public function createItem(Item $item): OrderItem
+    public function createItem(Product $product): OrderItem
     {
         $orderItem = new OrderItem();
-        $orderItem->setProduct($item);
+        $orderItem->setProduct($product);
         $orderItem->setQuantity(1);
 
         return $orderItem;

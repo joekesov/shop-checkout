@@ -3,15 +3,15 @@
 namespace App\Entity;
 
 use App\Entity\AbstractEntity;
-use App\Repository\ItemRepository;
+use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ItemRepository::class)
+ * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
-class Item extends AbstractEntity
+class Product extends AbstractEntity
 {
     /**
      * @ORM\Id
@@ -26,19 +26,18 @@ class Item extends AbstractEntity
     private $sku;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity=Promotion::class, mappedBy="item", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Promotion::class, mappedBy="product", orphanRemoval=true)
      * @ORM\OrderBy({"quantity": "DESC"})
      */
     private $promotions;
 
     public function __construct()
     {
-        $this->prices = new ArrayCollection();
         $this->promotions = new ArrayCollection();
     }
 
@@ -59,12 +58,12 @@ class Item extends AbstractEntity
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?string
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(string $price): self
     {
         $this->price = $price;
 
@@ -83,7 +82,7 @@ class Item extends AbstractEntity
     {
         if (!$this->promotions->contains($promotion)) {
             $this->promotions[] = $promotion;
-            $promotion->setItem($this);
+            $promotion->setProduct($this);
         }
 
         return $this;
@@ -93,8 +92,8 @@ class Item extends AbstractEntity
     {
         if ($this->promotions->removeElement($promotion)) {
             // set the owning side to null (unless already changed)
-            if ($promotion->getItem() === $this) {
-                $promotion->setItem(null);
+            if ($promotion->getProduct() === $this) {
+                $promotion->setProduct(null);
             }
         }
 

@@ -5,18 +5,18 @@ namespace App\Presentation\Home\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\Item;
+use App\Entity\Product;
 
 class HomeController extends AbstractController
 {
     public function index(): Response
     {
         $repository = $this->getDoctrine()
-            ->getRepository(Item::class);
-        $items = $repository->findAll();
+            ->getRepository(Product::class);
+        $products = $repository->findAll();
 
         return $this->render('home/index.html.twig', [
-            'items' => $items,
+            'items' => $products,
         ]);
     }
 }

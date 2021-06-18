@@ -19,10 +19,10 @@ class Promotion extends AbstractEntity
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="promotions")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="promotions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $item;
+    private $product;
 
     /**
      * @ORM\Column(type="smallint")
@@ -44,14 +44,14 @@ class Promotion extends AbstractEntity
         return $this->id;
     }
 
-    public function getItem(): ?Item
+    public function getProduct(): ?Product
     {
-        return $this->item;
+        return $this->product;
     }
 
-    public function setItem(?Item $item): self
+    public function setProduct(?Product $product): self
     {
-        $this->item = $item;
+        $this->product = $product;
 
         return $this;
     }

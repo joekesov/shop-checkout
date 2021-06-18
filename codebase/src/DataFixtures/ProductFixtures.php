@@ -2,26 +2,22 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Item;
+use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class ItemFixtures extends Fixture
+class ProductFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
+        foreach($this->getData() as $productData) {
+            $product = new Product();
+            $product
+                ->setSku($productData['sku'])
+                ->setPrice($productData['price']);
 
-
-        foreach($this->getData() as $itemData) {
-            $item = new Item();
-            $item
-                ->setSku($itemData['sku'])
-                ->setPrice($itemData['price']);
-
-            $manager->persist($item);
-            $this->addReference($itemData['reference'], $item);
+            $manager->persist($product);
+            $this->addReference($productData['reference'], $product);
         }
 
         $manager->flush();
@@ -31,22 +27,22 @@ class ItemFixtures extends Fixture
     {
         return [
             [
-                'reference' => 'item_01',
+                'reference' => 'product_01',
                 'sku' => 'A',
                 'price' => 50,
             ],
             [
-                'reference' => 'item_02',
+                'reference' => 'product_02',
                 'sku' => 'B',
                 'price' => 30,
             ],
             [
-                'reference' => 'item_03',
+                'reference' => 'product_03',
                 'sku' => 'C',
                 'price' => 20,
             ],
             [
-                'reference' => 'item_04',
+                'reference' => 'product_04',
                 'sku' => 'D',
                 'price' => 10,
             ],

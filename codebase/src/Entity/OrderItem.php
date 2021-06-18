@@ -20,10 +20,10 @@ class OrderItem extends AbstractEntity
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class)
+     * @ORM\ManyToOne(targetEntity=Product::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $item;
+    private $product;
 
     /**
      * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="orderItems")
@@ -43,14 +43,14 @@ class OrderItem extends AbstractEntity
         return $this->id;
     }
 
-    public function getItem(): ?Item
+    public function getProduct(): ?Product
     {
-        return $this->item;
+        return $this->product;
     }
 
-    public function setItem(?Item $item): self
+    public function setProduct(?Product $product): self
     {
-        $this->item = $item;
+        $this->product = $product;
 
         return $this;
     }
@@ -90,7 +90,7 @@ class OrderItem extends AbstractEntity
         $total = 0;
 
         $itemQuantity = $this->getQuantity();
-        $promotions = $this->getItem()->getPromotions();
+        $promotions = $this->getProduct()->getPromotions();
         foreach ($promotions as $promotion) {
             if ($itemQuantity >= $promotion->getQuantity()) {
                 $total += $promotion->getPrice();
@@ -99,7 +99,7 @@ class OrderItem extends AbstractEntity
         }
 
         if ($itemQuantity > 0) {
-            $total += $this->getItem()->getPrice() * $itemQuantity;
+            $total += $this->getProduct()->getPrice() * $itemQuantity;
         }
 
         return $total;
@@ -114,6 +114,6 @@ class OrderItem extends AbstractEntity
      */
     public function equals(OrderItem $item): bool
     {
-        return $this->getItem()->getId() === $item->getItem()->getId();
+        return $this->getProduct()->getId() === $item->getProduct()->getId();
     }
 }
