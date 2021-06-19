@@ -80,12 +80,11 @@ class OrderItem extends AbstractEntity
     }
 
     /**
-     * TODO:
      * Calculates the item total.
      *
      * @return float|int
      */
-    public function getTotal(): float
+    public function getTotal(): string
     {
         $total = 0;
 

@@ -20,6 +20,7 @@ class Order extends AbstractEntity
      * @var string
      */
     const STATUS_CART = 'cart';
+    const STATUS_CHECKOUT = 'checkout';
 
     /**
      * @ORM\Id
@@ -47,6 +48,12 @@ class Order extends AbstractEntity
      * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="orderRef", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $orderItems;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Invoice::class, mappedBy="orderRef", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id": "DESC"})
+     */
+    private $invoices;
 
     public function __construct()
     {
@@ -159,5 +166,35 @@ class Order extends AbstractEntity
         }
 
         return $total;
+    }
+
+    /**
+     * @return Collection|OrderItem[]
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoice(Invoice $invoice): self
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices[] = $invoice;
+            $invoice->setOrderRef($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoices->removeElement($invoice)) {
+            // set the owning side to null (unless already changed)
+            if ($invoice->getOrderRef() === $this) {
+                $invoice->setOrderRef(null);
+            }
+        }
+
+        return $this;
     }
 }

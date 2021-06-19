@@ -27,8 +27,6 @@ app_product_edit:
   path: /product/edit/{id}
   controller: App\Presentation\Product\Controller\ManageProductController::edit
 
-
-
 # -------- Promotion -----
 app_promotion_create:
   path: /promotion/create/{id}
@@ -42,3 +40,8 @@ app_promotion_edit:
 app_cart:
   path: /cart
   controller: App\Presentation\Order\Controller\CartController::index
+
+app_invoice_view:
+  path: /invoice/{id}
+  controller: App\Presentation\Order\Controller\CheckoutController::index
+

@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-8">
                 <h1 class="mt-4 mt-md-0">SKU: {{ product.sku }}</h1>
-                <h2>{{ product.price }} €</h2>
+                <h2>{{ product.price|number_format(2, '.', ' ') }} €</h2>
 
                 {% if product.promotions %}
                     <table class="table">
@@ -26,7 +26,7 @@
                         {% for promotion in product.promotions %}
                             <tr>
                                 <td>{{ promotion.quantity }} items</td>
-                                <td>{{ promotion.price }} €</td>
+                                <td>{{ promotion.price|number_format(2, '.', ' ') }} €</td>
                             </tr>
                         {% endfor %}
                         </tbody>

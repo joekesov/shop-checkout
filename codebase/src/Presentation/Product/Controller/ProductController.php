@@ -28,6 +28,11 @@ class ProductController extends AbstractController
 
             $cartManager->save($cart);
 
+            $this->addFlash(
+                'notice',
+                'Cart was updated successfully!'
+            );
+
             return $this->redirectToRoute('app_product_detail', ['id' => $product->getId()]);
         }
 

@@ -7,9 +7,12 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @UniqueEntity("sku")
  */
 class Product extends AbstractEntity
 {
@@ -21,12 +24,20 @@ class Product extends AbstractEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=1)
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 1
+     * )
      */
     private $sku;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @Assert\Type(
+     *     type="numeric",
+     *     message="The value {{ value }} is not a valid price."
+     * )
      */
     private $price;
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PromotionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\AbstractEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PromotionRepository::class)
@@ -31,6 +32,10 @@ class Promotion extends AbstractEntity
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @Assert\Type(
+     *     type="numeric",
+     *     message="The value {{ value }} is not a valid price."
+     * )
      */
     private $price;
 

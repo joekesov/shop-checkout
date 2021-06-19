@@ -22,7 +22,8 @@ class CartItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => OrderItem::class
+            'data_class' => OrderItem::class,
+            'csrf_protection' => false,
         ]);
     }
 }

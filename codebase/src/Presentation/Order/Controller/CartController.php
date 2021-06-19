@@ -3,6 +3,7 @@
 
 namespace App\Presentation\Order\Controller;
 
+use App\Entity\Order;
 use App\Presentation\Order\Form\CartType;
 use App\Manager\CartManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,19 @@ class CartController extends AbstractController
             $cart->setUpdatedAt(new \DateTime());
             $cartManager->save($cart);
 
-            return $this->redirectToRoute('app_cart');
+            $flashMessage = 'Cart was updated successfully!';
+            $redirectTo = 'app_cart';
+            $redirectParams = [];
+
+            if ($form->get('checkout')->isClicked() && $cart->getStatus() == Order::STATUS_CHECKOUT) {
+                $flashMessage = 'Successfully checked out your order!';
+                $redirectTo = 'app_invoice_view';
+                $redirectParams['id'] = $cart->getInvoices()->first()->getId();
+            }
+
+            $this->addFlash('notice', $flashMessage);
+
+            return $this->redirectToRoute($redirectTo, $redirectParams);
         }
 
         return $this->render('cart/index.html.twig', [
@@ -31,4 +44,5 @@ class CartController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
 }

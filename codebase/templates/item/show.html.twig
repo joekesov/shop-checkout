@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td>Price:</td>
-            <td>{{ item.price }}</td>
+            <td>{{ item.price }} €</td>
         </tr>
 
         <tr>
@@ -39,7 +39,7 @@
                         <tr>
                             <td>{{ promotion.id }}</td>
                             <td>{{ promotion.quantity }}</td>
-                            <td>{{ promotion.price }}</td>
+                            <td>{{ promotion.price }} €</td>
                             <td>{{ promotion.isactive }}</td>
                             <td><a href="{{ url('app_promotion_edit', {id: promotion.id}) }}">Edit</a></td>
                         </tr>
