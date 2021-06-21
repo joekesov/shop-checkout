@@ -3,15 +3,21 @@
 
 namespace App\Presentation\Order\Form\EventListener;
 
+use App\Manager\CartManager;
 use App\Entity\Order;
-use App\Entity\Invoice;
-use App\Entity\InvoiceItem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 class CheckoutCartListener implements EventSubscriberInterface
 {
+    private $cartManager;
+
+    public function __construct(CartManager $cartManager)
+    {
+        $this->cartManager = $cartManager;
+    }
+
     /**
      * @inheritDoc
      */
@@ -43,41 +49,6 @@ class CheckoutCartListener implements EventSubscriberInterface
             return;
         }
 
-        $invoice = new Invoice();
-        $invoice->setOrderRef($cart);
-
-        foreach ($cart->getOrderItems() as $orderItem) {
-            $product = $orderItem->getProduct();
-            $promotions = $product->getPromotions();
-
-            $itemQuantity = $orderItem->getQuantity();
-            foreach ($promotions as $promotion) {
-                while ($promotion->getQuantity() <= $itemQuantity) {
-                    $invoiceItem = new InvoiceItem();
-                    $invoiceItem->setProduct($orderItem->getProduct())
-                        ->setPromotion($promotion)
-                        ->setQuantity($promotion->getQuantity())
-                        ->setPrice($promotion->getPrice());
-
-                    $invoice->addInvoiceItem($invoiceItem);
-
-                    $itemQuantity -= $promotion->getQuantity();
-                }
-            }
-
-            if (empty($itemQuantity)) {
-                continue;
-            }
-
-            $invoiceItem = new InvoiceItem();
-            $invoiceItem->setProduct($orderItem->getProduct())
-                ->setQuantity($itemQuantity)
-                ->setPrice($itemQuantity * $product->getPrice());
-
-            $invoice->addInvoiceItem($invoiceItem);
-        }
-
-        $cart->addInvoice($invoice);
-        $cart->setStatus(Order::STATUS_CHECKOUT);
+        $this->cartManager->checkout($cart);
     }
 }

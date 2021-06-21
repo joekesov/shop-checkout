@@ -15,6 +15,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CartType extends AbstractType
 {
+    private $checkoutCartListener;
+
+    public function __construct(CheckoutCartListener $checkoutCartListener)
+    {
+        $this->checkoutCartListener = $checkoutCartListener;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -27,7 +34,7 @@ class CartType extends AbstractType
 
         $builder->addEventSubscriber(new RemoveCartItemListener());
         $builder->addEventSubscriber(new ClearCartListener());
-        $builder->addEventSubscriber(new CheckoutCartListener());
+        $builder->addEventSubscriber($this->checkoutCartListener);
     }
 
     public function configureOptions(OptionsResolver $resolver)
